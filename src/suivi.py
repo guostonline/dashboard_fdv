@@ -49,14 +49,22 @@ class Suivi:
             }
         )
 
-    def filter_vendeur_famille(self, vendeur: str, famille: str):
+    def filter_vendeur_famille(self, vendeur: str, famille: str, sort:bool = False):
         df_mod = self.df.query("Famille==@famille & Vendeur==@vendeur")
+        if sort:
+            df_mod=df_mod.sort_values("REAL",ascending=False)
+            return df_mod
         df_mod = (
             df_mod.style.background_gradient(subset=["REAL"])
-            .highlight_max(subset=["Percent"])
-            .highlight_min(subset=["Percent", "REAL"], color="orange")
+           
+            .highlight_min(subset=["REAL"], color="orange")
         )
 
+        return df_mod
+    def df_filter(self, vendeur: str, famille: str):
+        df_mod = self.df.query("Famille==@famille & Vendeur==@vendeur")
+        
+      
         return df_mod
 
     @property

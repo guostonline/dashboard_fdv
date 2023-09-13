@@ -1,5 +1,6 @@
 import streamlit as st
-import pandas as pd
+
+import plotly.express as px
 from src.myEnum import Famille, Categorie, Extra
 from src.excel_fonctions import Excel
 from src.fdv import *
@@ -20,11 +21,6 @@ real_days_rest = 1
 
 if "load_state" not in st.session_state:
     st.session_state.load_state = True
-
-
-
-
-
 
 uploaded_file = st.sidebar.file_uploader(
     "Choisir un fichier excel.",
@@ -68,8 +64,26 @@ options_extra = st.sidebar.selectbox("Extra", [hScore.value for hScore in Extra]
 suivi = Suivi(
     st.session_state.total_days_month, st.session_state.days_worked, real_days_rest
 )
-df = suivi.filter_vendeur_famille(select_vendeur, select_famille)
+df = suivi.filter_vendeur_famille(select_vendeur, select_famille,sort=True)
+df_filter = suivi.df_filter(select_vendeur, select_famille)
 print(st.session_state.total_days_month, st.session_state.days_worked, real_days_rest)
 # df_mod = df.query("Famille==@select_famille & Vendeur==@select_vendeur")
 
 st.dataframe(df)
+vendeur_ca = (
+    df_filter.groupby(by=["Vendeur"]).sum()[["REAL", "OBJ"]].sort_values(by="REAL")
+)
+
+graph_bar = px.bar(
+    vendeur_ca, 
+    y=vendeur_ca.index,
+    x=["REAL", "OBJ"], 
+    title="Real vs OBJ",
+    barmode='group',
+    height=550,
+    width=500,
+    )
+ 
+
+
+st.plotly_chart(graph_bar)
