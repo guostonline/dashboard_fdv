@@ -1,9 +1,10 @@
 import streamlit as st
-
+from src.send_image import SendImage
 import plotly.express as px
-from src.myEnum import Famille, Categorie, Extra
+from src.myEnum import Famille, Categorie, Extra,CatFamille
 from src.excel_fonctions import Excel
 from src.fdv import *
+from src.famille import *
 from src.suivi import Suivi
 
 
@@ -53,31 +54,36 @@ select_vendeur = st.sidebar.multiselect(
     "Select FDV", options=get_categorie(categories), default=get_categorie(categories)
 )
 
-
+select_categorie_famille=st.sidebar.selectbox("Categories de famille",options=[catFamille.value for catFamille in CatFamille])
 select_famille = st.sidebar.multiselect(
     "Select Famille",
-    [famille.value for famille in Famille],
-    default="C.A (ht)",
+    get_famille_by_categorie(select_categorie_famille),
+    default=get_famille_by_categorie(select_categorie_famille),
     
 )
 options_extra = st.sidebar.selectbox("Extra", [hScore.value for hScore in Extra])
 suivi = Suivi(
     st.session_state.total_days_month, st.session_state.days_worked, real_days_rest
 )
-df = suivi.filter_vendeur_famille(select_vendeur, select_famille,sort=True)
-df_filter = suivi.df_filter(select_vendeur, select_famille)
-print(st.session_state.total_days_month, st.session_state.days_worked, real_days_rest)
-# df_mod = df.query("Famille==@select_famille & Vendeur==@select_vendeur")
+df_table,df_chart = suivi.df_filter(select_vendeur, select_famille)
+#df_chart = suivi.filter_vendeur_famille(select_vendeur, select_famille)
 
-st.dataframe(df)
+df_whatsapp=suivi.df_for_whatsapp(select_vendeur, select_famille)
+print(st.session_state.total_days_month, st.session_state.days_worked, real_days_rest)
+
+
+st.dataframe(df_table)
+send_image=SendImage(df_whatsapp,select_vendeur)
+
+st.button("Send images",on_click=send_image.send_image)
 vendeur_ca = (
-    df_filter.groupby(by=["Vendeur"]).sum()[["REAL", "OBJ"]].sort_values(by="REAL")
+    df_chart.groupby(by=["Vendeur"]).sum()[["REAL", "OBJ"]].sort_values(by="REAL")
 )
 
 graph_bar = px.bar(
     vendeur_ca, 
     y=vendeur_ca.index,
-    x=["REAL", "OBJ"], 
+    x=["OBJ","REAL"], 
     title="Real vs OBJ",
     barmode='group',
     height=550,

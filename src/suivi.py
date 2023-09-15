@@ -25,18 +25,27 @@ class Suivi:
                 "Historique 2022": "int",
             }
         )
-
+        def highlight_max(s):
+                if s.dtype == np.object:
+                    is_neg = [False for _ in range(s.shape[0])]
+                else:
+                    is_neg = s < 0
+                return ['color: red;' if cell else 'color:black' 
+                        for cell in is_neg]
         # self.df["OBJ ttc"] = self.df.OBJ.apply(lambda x: (x * (self.df["OBJ"]*(days_towork/worked_days) ))* 1.2)
+        #self.df["Percent"]=self.df["Percent"].style.apply(highlight_max)
         self.df["REAL"] = self.df["REAL"] + self.df["EnCours"]
         self.df["Percent"] = self.df["REAL"] / self.df["OBJ"] - 1
 
         self.df.loc[:, "Percent"] = self.df["Percent"].map("{:.1%}".format)
-
+        
         self.df.loc[:, "H"] = self.df["H"].map("{:.1%}".format)
-        self.df.replace(0, 1, inplace=True)
+        self.df.replace(0,1, inplace=True)
+        self.df.replace(1,0, inplace=True)
         self.df["OBJ ttc"] = round(
             (self.df["OBJ"] * self.days_towork / self.worked_days) * 1.2
         )
+
 
         self.df["RAF"] = (
             self.df["OBJ ttc"] - (self.df["REAL"] * 1.2)
@@ -49,23 +58,17 @@ class Suivi:
             }
         )
 
-    def filter_vendeur_famille(self, vendeur: str, famille: str, sort:bool = False):
-        df_mod = self.df.query("Famille==@famille & Vendeur==@vendeur")
-        if sort:
-            df_mod=df_mod.sort_values("REAL",ascending=False)
-            return df_mod
-        df_mod = (
-            df_mod.style.background_gradient(subset=["REAL"])
-           
-            .highlight_min(subset=["REAL"], color="orange")
-        )
+    
 
-        return df_mod
+    def df_for_whatsapp(self, vendeur: str, famille: str):
+        df = self.df.query("Famille==@famille & Vendeur==@vendeur")
+        return df
+
     def df_filter(self, vendeur: str, famille: str):
         df_mod = self.df.query("Famille==@famille & Vendeur==@vendeur")
+        df=df_mod.style.set_properties(**{'background-color': 'yellow'}, subset=['OBJ ttc','RAF'])
         
-      
-        return df_mod
+        return df,df_mod
 
     @property
     def get_all_vendeurs(self):

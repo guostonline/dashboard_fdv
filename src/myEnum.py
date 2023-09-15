@@ -6,21 +6,28 @@ class Famille(Enum):
     COLORANT = "COLORANT"
     BOUILLON = "BOUILLON"
     CONDIMENTS = "CONDIMENTS"
-    SAUCE = "Sauces Tacos"
+    SAUCE = "SAUCES TACOS"
     CONSERVES = "CONSERVES"
-    CA='C.A (ht)'
+    CA = "C.A (ht)"
 
 
 class Categorie(Enum):
     PREVENDEUR = "Pré-vendeur"
     CONVENTIONNEL = "Conventionnel"
     ALLFDV = "ALL FDV"
-    SOMPREVENTE="SOM pré-vendeur"
-    VMMPREVENTE="VMM pré-vendeur"
-    SOMALL="SOM All"
-    VMMALL="VMM All"
-    ONEBYONE="One by One"
+    SOMPREVENTE = "SOM pré-vendeur"
+    VMMPREVENTE = "VMM pré-vendeur"
+    SOMALL = "SOM All"
+    VMMALL = "VMM All"
+    ONEBYONE = "One by One"
+
 
 class Extra(Enum):
-    HIGHTSCORE="Hight Score"
-    SMALLSCORE= "Smal Score"
+    HIGHTSCORE = "Hight Score"
+    SMALLSCORE = "Smal Score"
+
+
+class CatFamille(Enum):
+    ALL = "ALL"
+    SOM = "SOM"
+    VMM = "VMM"

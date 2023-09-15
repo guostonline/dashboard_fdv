@@ -63,6 +63,7 @@ conventionnel: list = [
     "T89 AKNOUN MOHAMED",
     "K60 ELHAOUZI RACHID",
     "D48 IBACH MOHAMED",
+    "CHAKIB ELFIL"
 ]
 
 
@@ -81,4 +82,4 @@ def get_categorie(categories: str):
         return som_all
     elif categories == "VMM All":
         return vmm_all
-    return pre_vendeur + conventionnel
+    return pre_vendeur + conventionnel 
