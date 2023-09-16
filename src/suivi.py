@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-from src.myEnum import Extra
+from src.myEnum import Extra,Famille
+
 
 
 class Suivi:
@@ -42,6 +43,7 @@ class Suivi:
         self.df.loc[:, "H"] = self.df["H"].map("{:.1%}".format)
         self.df.replace(0,1, inplace=True)
         self.df.replace(1,0, inplace=True)
+        self.df.replace("SAUCES TACOS","SAUCES", inplace=True)
         self.df["OBJ ttc"] = round(
             (self.df["OBJ"] * self.days_towork / self.worked_days) * 1.2
         )
@@ -74,3 +76,7 @@ class Suivi:
     def get_all_vendeurs(self):
         all_fdv = self.df["Vendeur"].unique()
         return all_fdv
+    def chart_famille(self,famille:Famille,vendeur:str):
+        df=self.df.query("Famille==@famille.name & Vendeur==@vendeur").groupby(by=["Famille"]).sum()[
+        ["REAL", "OBJ"]].sort_values(by="REAL")
+        return df

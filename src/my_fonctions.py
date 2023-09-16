@@ -31,3 +31,6 @@ class MyFonctions:
                 print("Data written successfully.")
         except Exception as e:
             print("An error occurred:", e)
+
+    
+    
