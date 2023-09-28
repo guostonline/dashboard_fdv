@@ -4,3 +4,5 @@ plotly
 openpyxl
 pandas
 numpy
+pywhatkit
+dataframe_image
