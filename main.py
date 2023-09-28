@@ -1,5 +1,7 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
 from src.send_image import SendImage
+from datetime import date
 import plotly.express as px
 from src.myEnum import Famille, Categorie, Extra, CatFamille
 from src.excel_fonctions import Excel
@@ -7,15 +9,24 @@ from src.my_fonctions import MyFonctions
 from src.fdv import *
 from src.famille import *
 from src.suivi import Suivi
+import suivi_page
 
 
 st.set_page_config(page_title="Rapport FDV", page_icon=":bar_chart:", layout="wide")
+with st.sidebar:
+    selected = option_menu("Main Menu", ["Home", 'Settings'], 
+        icons=['house', 'gear'], menu_icon="cast", default_index=0)
+    
+        
 get_day_work = 24
-
+#with open('style.css') as f:
+    #st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
 if "total_days_month" not in st.session_state:
     st.session_state.total_days_month = (24,)
 if "days_worked" not in st.session_state:
     st.session_state.days_worked = (1,)
+
+    
 
 day_work = 1
 real_days_rest = 1
@@ -74,15 +85,36 @@ df_whatsapp = suivi.df_for_whatsapp(select_vendeur, select_famille)
 print(st.session_state.total_days_month, st.session_state.days_worked, real_days_rest)
 
 
-st.dataframe(df_table)
-send_image = SendImage(df_whatsapp, select_vendeur)
+st.data_editor(
+    df_table,
+    column_config={
+        "Total Rest %": st.column_config.ProgressColumn(
+            "% to win",
+            help="The sales volume in USD",
+            format=" %i",
+            min_value=0,
+            max_value=100,
+            width="medium"
+            # df_chart["OBJ ttc"]/(df_chart["REAL"]*1.2)*100,
+        )
+    },
+    hide_index=True,
+)
 
-st.button("Send images", on_click=send_image.send_image)
+
+
+col_message,col_send_message,col_vide=st.columns(3)
+today = date.today().strftime("%d/%m/%Y")
+
+message=col_message.text_input("Message",value=today)
+
+send_image = SendImage(df_whatsapp, select_vendeur,message=message)
+today = date.today().strftime("%d/%m/%Y")
+
+col_send_message.button("Send images", on_click=send_image.send_image)
 vendeur_ca = (
     df_chart.groupby(by=["Vendeur"]).sum()[["REAL", "OBJ"]].sort_values(by="REAL")
 )
-
-test = st.button("test")
 
 
 def set_color() -> list:
@@ -97,8 +129,6 @@ def set_color() -> list:
     return my_list
 
 
-if test:
-    print(set_color())
 graph_bar = px.bar(
     vendeur_ca,
     y=vendeur_ca.index,
@@ -121,40 +151,37 @@ graph_bar_color = px.bar(
 )
 
 
-def famille_chart(famille: Famille):
+def famille_chart(famille: Famille)->px.bar:
     chart = px.bar(
-        suivi.chart_famille(famille,select_vendeur),
-        y=suivi.chart_famille(famille,select_vendeur).index,
-        x=["OBJ","REAL"],
+        suivi.chart_famille(famille.name, select_vendeur),
+        y=suivi.chart_famille(famille.name, select_vendeur).index,
+        x=["OBJ", "REAL"],
         title=famille.name,
         barmode="group",
         width=400,
         height=250,
     )
     return chart
-
+ 
 
 col1, col2 = st.columns(2)
 with col1:
     st.plotly_chart(graph_bar)
 with col2:
     st.plotly_chart(graph_bar_color)
-col3, col4, col5 = st.columns(3)
+
+col3,col4,col5 = st.columns(3)
 with col3:
     st.plotly_chart(famille_chart(famille=Famille.LEVURE))
 with col4:
     st.plotly_chart(famille_chart(famille=Famille.COLORANT))
 with col5:
     st.plotly_chart(famille_chart(famille=Famille.BOUILLON))
-
-    
-col6, col7, col8 = st.columns(3)
+col6,col7,col8 = st.columns(3)
 with col6:
     st.plotly_chart(famille_chart(famille=Famille.CONDIMENTS))
-#with col7:
-#   st.plotly_chart(famille_chart(famille=Famille.SAUCE))
-with col7:
-    st.plotly_chart(famille_chart(famille=Famille.CONSERVES))
 
 with col8:
-  st.plotly_chart(famille_chart(famille=Famille.SAUCE))    
+    st.plotly_chart(famille_chart(famille=Famille.CONSERVES))
+#col4.st.plotly_chart(famille_chart(famille=Famille.COLORANT))
+#col5.st.plotly_chart(famille_chart(famille=Famille.BOUILLON))

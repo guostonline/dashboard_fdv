@@ -71,8 +71,8 @@ class Excel:
         sheet_ranges_quanti['A1'] = "Vendeur"
         sheet_ranges_quanti['B1'] = "Famille"
         sheet_ranges_quanti['E1'] = "Percent"
-        sheet_ranges_quanti['F1'] = "Real 2023"
-        sheet_ranges_quanti['G1'] = "Historique 2022"
+        sheet_ranges_quanti['F1'] = "R.2023"
+        sheet_ranges_quanti['G1'] = "H.2022"
         sheet_ranges_quanti['H1'] = "H"
         print("max", sheet_ranges_quanti.max_row)
         for i in range(sheet_ranges_quanti.max_row):

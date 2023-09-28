@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-from src.myEnum import Extra,Famille
-
+from src.myEnum import Extra, Famille
 
 
 class Suivi:
@@ -22,45 +21,58 @@ class Suivi:
                 "REAL": "int",
                 "OBJ": "int",
                 "EnCours": "int",
-                "Real 2023": "int",
-                "Historique 2022": "int",
+                "R.2023": "int",
+                "H.2022": "int",
             }
         )
+
         def highlight_max(s):
-                if s.dtype == np.object:
-                    is_neg = [False for _ in range(s.shape[0])]
-                else:
-                    is_neg = s < 0
-                return ['color: red;' if cell else 'color:black' 
-                        for cell in is_neg]
+            if s.dtype == np.object:
+                is_neg = [False for _ in range(s.shape[0])]
+            else:
+                is_neg = s < 0
+            return ["color: red;" if cell else "color:black" for cell in is_neg]
+
         # self.df["OBJ ttc"] = self.df.OBJ.apply(lambda x: (x * (self.df["OBJ"]*(days_towork/worked_days) ))* 1.2)
-        #self.df["Percent"]=self.df["Percent"].style.apply(highlight_max)
+        # self.df["Percent"]=self.df["Percent"].style.apply(highlight_max)
         self.df["REAL"] = self.df["REAL"] + self.df["EnCours"]
         self.df["Percent"] = self.df["REAL"] / self.df["OBJ"] - 1
 
         self.df.loc[:, "Percent"] = self.df["Percent"].map("{:.1%}".format)
-        
+
         self.df.loc[:, "H"] = self.df["H"].map("{:.1%}".format)
-        self.df.replace(0,1, inplace=True)
-        self.df.replace(1,0, inplace=True)
-        self.df.replace("SAUCES TACOS","SAUCES", inplace=True)
+        self.df.replace(0, 1, inplace=True)
+        self.df.replace(1, 0, inplace=True)
+        self.df.replace("SAUCES TACOS", "SAUCES_TACOS", inplace=True)
+
         self.df["OBJ ttc"] = round(
             (self.df["OBJ"] * self.days_towork / self.worked_days) * 1.2
         )
 
-
         self.df["RAF"] = (
             self.df["OBJ ttc"] - (self.df["REAL"] * 1.2)
         ) / self.real_days_rest
-        # self.df["Percent"]=self.df["Percent"].pct_change().style.highlight_max(color="lightgreen")
+
+        self.df["Total Rest"] = round(self.df["OBJ ttc"] - (self.df["REAL"] * 1.2))
+        self.df["Total Rest %"] = round(
+            ((self.df["REAL"] * 1.2) / self.df["OBJ ttc"]) * 100
+        )
+        self.df["+110%"] = round((self.df["OBJ ttc"] * 1.1) - (self.df["REAL"] * 1.2))
+        self.df["97%"] = round((self.df["OBJ ttc"] * 0.97) - (self.df["REAL"] * 1.2))
+        self.df["91%"] = round((self.df["OBJ ttc"] * 0.91) - (self.df["REAL"] * 1.2))
+        self.df["71%"] = round((self.df["OBJ ttc"] * 0.71) - (self.df["REAL"] * 1.2))
+
         self.df = self.df.astype(
             {
                 "OBJ ttc": "int",
                 "RAF": "int",
+                "Total Rest": "int",
+                "+110%": "int",
+                "97%": "int",
+                "91%": "int",
+                "71%": "int",
             }
         )
-
-    
 
     def df_for_whatsapp(self, vendeur: str, famille: str):
         df = self.df.query("Famille==@famille & Vendeur==@vendeur")
@@ -68,15 +80,23 @@ class Suivi:
 
     def df_filter(self, vendeur: str, famille: str):
         df_mod = self.df.query("Famille==@famille & Vendeur==@vendeur")
-        df=df_mod.style.set_properties(**{'background-color': 'yellow'}, subset=['OBJ ttc','RAF'])
-        
-        return df,df_mod
+        df = df_mod.style.set_properties(
+            **{"background-color": "yellow"}, subset=["OBJ ttc", "RAF", "Total Rest"]
+        )
+
+        return df, df_mod
 
     @property
     def get_all_vendeurs(self):
         all_fdv = self.df["Vendeur"].unique()
         return all_fdv
-    def chart_famille(self,famille:Famille,vendeur:str):
-        df=self.df.query("Famille==@famille.name & Vendeur==@vendeur").groupby(by=["Famille"]).sum()[
-        ["REAL", "OBJ"]].sort_values(by="REAL")
+
+    def chart_famille(self, famille: str, vendeur: str):
+        df = (
+            self.df.query("Famille==@famille & Vendeur==@vendeur")
+            .groupby(by=["Famille"])
+            .sum()[["REAL", "OBJ"]]
+            .sort_values(by="REAL")
+        )
+
         return df

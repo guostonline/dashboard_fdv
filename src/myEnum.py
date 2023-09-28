@@ -6,7 +6,7 @@ class Famille(Enum):
     COLORANT = "COLORANT"
     BOUILLON = "BOUILLON"
     CONDIMENTS = "CONDIMENTS"
-    SAUCE = "SAUCES"
+    SAUCE = "SAUCES_TACOS"
     CONSERVES = "CONSERVES"
     CA = "C.A (ht)"
 
