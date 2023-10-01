@@ -3,13 +3,14 @@ import pandas as pd
 from openpyxl import load_workbook
 from datetime import date
 import logging
-
+from src.vendeurs_phone import vendeur_number_phone
 
 class SaveSuivi:
     
-    def __init__(self, vendeurs: list, excel: str) -> None:
-        self.vendeurs = vendeurs
+    def __init__( self, excel,date:str) -> None:
+        self.vendeurs=  list(vendeur_number_phone.keys())
         self.excel = excel
+        self.date=date
 
     def transform_df(self, vendeur):
         wb = load_workbook(self.excel)
@@ -29,13 +30,13 @@ class SaveSuivi:
         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
         database = myclient["madec"]
         my_collection = database["suivi_journalier"]
-        today = date.today().strftime("%d/%m/%Y")
-        data_send = {"vendeur": vendeur, "date": today, "data": data}
+        
+        data_send = {"vendeur": vendeur, "date": self.date, "data": data}
         test = my_collection.insert_one(data_send)
         
     def send_all_vendeurs(self):
         for vendeur in self.vendeurs:
-           #print(self.transform_df(vendeur))
+          
            self.send_data(vendeur, self.transform_df(vendeur))
         logging("All vendeurs send successfully")
 

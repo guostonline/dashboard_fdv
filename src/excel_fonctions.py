@@ -78,6 +78,8 @@ class Excel:
         for i in range(sheet_ranges_quanti.max_row):
             if sheet_ranges_quanti[f"E{i + 1}"].value == '%':
                 sheet_ranges_quanti[f"E{i + 1}"].value = 0
+            if sheet_ranges_quanti[f"B{i + 1}"].value == 'SAUCES TACOS':
+                sheet_ranges_quanti[f"B{i + 1}"].value = 'SAUCES'
         for i in range(sheet_ranges_quanti.max_row):
             if sheet_ranges_quanti[f"H{i + 1}"].value == '%':
                 sheet_ranges_quanti[f"H{i + 1}"].value = 0

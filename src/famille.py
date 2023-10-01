@@ -6,7 +6,7 @@ categories_famille_som: list[str] = [
 ]
 categories_famille_vmm: list[str] = [
     "CONDIMENTS",
-    "SAUCES_TACOS",
+    "SAUCES",
     "CONSERVES",
     "C.A (ht)",
 ]
@@ -15,7 +15,7 @@ categories_famille_all: list[str] = [
     "COLORANT",
     "BOUILLON",
     "CONDIMENTS",
-    "SAUCES_TACOS",
+    "SAUCES",
     "CONSERVES",
     "C.A (ht)",
 ]
