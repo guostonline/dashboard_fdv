@@ -1,0 +1,9 @@
+import json
+
+with open("days.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+
+        data["from_file"] = {"t": b, "d": a}
+
+        with open("days.json", "w") as jsonFile:
+            json.dump(data, jsonFile)

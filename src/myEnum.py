@@ -12,6 +12,7 @@ class Famille(Enum):
 
 
 class Categorie(Enum):
+    CDZ="CDZ"
     PREVENDEUR = "Pré-vendeur"
     CONVENTIONNEL = "Conventionnel"
     ALLFDV = "ALL FDV"

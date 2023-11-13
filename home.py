@@ -3,6 +3,7 @@ from streamlit_option_menu import option_menu
 from src.send_image import SendImage
 from datetime import date
 import plotly.express as px
+from millify import millify,prettify
 from src.myEnum import Famille, Categorie, Extra, CatFamille
 from src.excel_fonctions import Excel
 from src.my_fonctions import MyFonctions
@@ -78,14 +79,16 @@ def home_page():
         st.session_state.total_days_month, st.session_state.days_worked, real_days_rest
     )
 
-    col_ca, col_real, col_Road = st.columns(3)
+    col_ca, col_real, col_road_cdz1, col_road_cdz2 = st.columns(4)
 
     with col_ca:
-        st.metric("Objective", 1000000, 10)
+        st.metric("Objective Parciale",millify(suivi.get_detail_obj_parcial(),precision=3) , f'Historique: {suivi.get_detail_historique()}%')
     with col_real:
-        st.metric("Réalisation", 1000000, -10)
-    with col_Road:
-        col_real = st.metric("Road to win", 880000, 88)
+        st.metric("Réalisation", millify(suivi.get_detail_real(),precision=3), f'Objectif: {round((suivi.get_detail_real()/suivi.get_detail_obj_parcial()-1)*100)}%')
+    with col_road_cdz1:
+        col_real = st.metric("Road to win cdz1", 880000, 88)
+    with col_road_cdz2:
+        col_real = st.metric("Road to win cdz2", 880000, 88)
     st.data_editor(
         df_table,
         column_config={
@@ -99,7 +102,7 @@ def home_page():
                 # df_chart["OBJ ttc"]/(df_chart["REAL"]*1.2)*100,
             )
         },
-        hide_index=True,
+        hide_index=False,
     )
 
     col_message, col_send_message, col_vide = st.columns(3)

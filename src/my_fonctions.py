@@ -31,6 +31,12 @@ class MyFonctions:
                 print("Data written successfully.")
         except Exception as e:
             print("An error occurred:", e)
-
+    @staticmethod
+    def percent_to_int(percent_str):
+    # Remove the '%' symbol and convert to float
+        percent_float = float(percent_str.strip('%'))
+        # Convert the float to integer
+        percent_int = int(percent_float)
+        return percent_int
     
     

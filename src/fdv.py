@@ -11,6 +11,7 @@ pre_vendeur: list = [
     "E14 BOUMDIANE MOHAMED",
     "F78 GHOUSMI MOURAD",
     "E60 BOUALLALI FARID",
+    
 ]
 som_pre_vendeur: list = [
     "Y59 EL GHANMI MOHAMED",
@@ -63,8 +64,12 @@ conventionnel: list = [
     "T89 AKNOUN MOHAMED",
     "K60 ELHAOUZI RACHID",
     "D48 IBACH MOHAMED",
-    "CHAKIB ELFIL"
+ 
 ]
+cdz:list=[
+        "CHAKIB ELFIL",
+        "CDZ AGADIR DET2",
+        ]
 
 
 def get_categorie(categories: str):
@@ -82,4 +87,6 @@ def get_categorie(categories: str):
         return som_all
     elif categories == "VMM All":
         return vmm_all
+    elif categories == "CDZ":
+        return cdz
     return pre_vendeur + conventionnel 

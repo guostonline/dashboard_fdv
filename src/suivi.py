@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from src.myEnum import Extra, Famille
-
+from src.my_fonctions import MyFonctions
 
 class Suivi:
     def __init__(self, days_towork, worked_days, real_days_rest) -> None:
@@ -85,6 +85,50 @@ class Suivi:
         )
 
         return df, df_mod
+
+    def get_detail_real(self):
+        df = (
+            self.df.query(
+                "Vendeur==['CHAKIB ELFIL','CDZ AGADIR DET2'] & Famille=='C.A (ht)'"
+            )
+            
+            .sum()[["REAL"]]
+            
+        )
+
+        return df.sum()
+    
+    def get_detail_obj_parcial(self):
+        df = (
+            self.df.query(
+                "Vendeur==['CHAKIB ELFIL','CDZ AGADIR DET2'] & Famille=='C.A (ht)'"
+            )
+            
+            .sum()[["OBJ"]]
+            
+        )
+
+        return df.sum()
+    def get_detail_historique(self):
+        df = (
+            self.df.query(
+                "Vendeur==['CHAKIB ELFIL','CDZ AGADIR DET2'] & Famille=='C.A (ht)'"
+            )
+            
+            .sum()[["R.2023"]]
+            
+        )
+        df2 = (
+            self.df.query(
+                "Vendeur==['CHAKIB ELFIL','CDZ AGADIR DET2'] & Famille=='C.A (ht)'"
+            )
+            
+            .sum()[["H.2022"]]
+            
+        )
+        
+        return round((df.sum()/df2.sum()-1)*100)
+    
 
     @property
     def get_all_vendeurs(self):
