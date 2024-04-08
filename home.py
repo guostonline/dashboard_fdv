@@ -94,7 +94,7 @@ def home_page():
         column_config={
             "Total Rest %": st.column_config.ProgressColumn(
                 "% to win",
-                help="The sales volume in USD",
+                help="The sales volume in DH",
                 format=" %i",
                 min_value=0,
                 max_value=100,
@@ -172,7 +172,7 @@ def home_page():
     with col3:
         st.plotly_chart(famille_chart(famille=Famille.LEVURE))
     with col4:
-        st.plotly_chart(famille_chart(famille=Famille.COLORANT))
+        st.plotly_chart(famille_chart(famille=Famille.FLAN))
     with col5:
         st.plotly_chart(famille_chart(famille=Famille.BOUILLON))
     col6, col7, col8 = st.columns(3)
@@ -182,6 +182,6 @@ def home_page():
     with col8:
         st.plotly_chart(famille_chart(famille=Famille.CONSERVES))
 
-    #with col7:
-        #st.plotly_chart(famille_chart(famille=Famille.SAUCE))
+    with col7:
+        st.plotly_chart(famille_chart(famille=Famille.SAUCES))
     

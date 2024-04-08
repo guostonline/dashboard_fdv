@@ -29,7 +29,7 @@ class SendImage:
             dfi.export(df, image_name)
 
             pywhatkit.sendwhats_image(
-                vendeur_number_phone[i], image_name, caption=self.message
+                vendeur_number_phone[i], image_name, caption=self.message,wait_time=15
             )
             os.remove(image_name)
 

@@ -3,10 +3,10 @@ from enum import Enum
 
 class Famille(Enum):
     LEVURE = "LEVURE"
-    COLORANT = "COLORANT"
+    FLAN = "FALN"
     BOUILLON = "BOUILLON"
     CONDIMENTS = "CONDIMENTS"
-    SAUCE = "SAUCES"
+    SAUCES = "SAUCES"
     CONSERVES = "CONSERVES"
     CA = "C.A (ht)"
 

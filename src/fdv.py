@@ -2,7 +2,7 @@ pre_vendeur: list = [
     "Y59 EL GHANMI MOHAMED",
     "F77 EL MEZRAOUI YOUSSEF",
     "T45 FAICAL GOUIZID",
-    "E31 BENCHOUIKH MOHAMMED",
+    "J01 BOUGAYOU ABDELHAKIM",
     "D45 OUARSSASSA YASSINE",
     "Y60 ATOUAOU AIMAD",
     "E66 MOUTAOUAKIL MOSTAFA",
@@ -11,15 +11,17 @@ pre_vendeur: list = [
     "E14 BOUMDIANE MOHAMED",
     "F78 GHOUSMI MOURAD",
     "E60 BOUALLALI FARID",
+   
     
 ]
 som_pre_vendeur: list = [
     "Y59 EL GHANMI MOHAMED",
-    "E31 BENCHOUIKH MOHAMMED",
-    "D45 OUARSSASSA YASSINE",
+    "J01 BOUGAYOU ABDELHAKIM",
+    "D45 OUARSSASSA YASSINE",  
     "D86 ACHAOUI AZIZ",
     "E14 BOUMDIANE MOHAMED",
     "F78 GHOUSMI MOURAD",
+    
 ]
 vmm_pre_vendeur:list=[
     "F77 EL MEZRAOUI YOUSSEF",
@@ -31,7 +33,7 @@ vmm_pre_vendeur:list=[
 ]
 som_all: list = [
     "Y59 EL GHANMI MOHAMED",
-    "E31 BENCHOUIKH MOHAMMED",
+    "J01 BOUGAYOU ABDELHAKIM",
     "D45 OUARSSASSA YASSINE",
     "D86 ACHAOUI AZIZ",
     "E14 BOUMDIANE MOHAMED",
@@ -42,6 +44,7 @@ som_all: list = [
     "T89 AKNOUN MOHAMED",
     "K60 ELHAOUZI RACHID",
     "D48 IBACH MOHAMED",
+    
 ]
 vmm_all:list=[
     "F77 EL MEZRAOUI YOUSSEF",
@@ -68,7 +71,7 @@ conventionnel: list = [
 ]
 cdz:list=[
         "CHAKIB ELFIL",
-        "CDZ AGADIR DET2",
+       "BOUTMEZGUINE EL MOSTAFA",
         ]
 
 

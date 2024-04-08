@@ -1,6 +1,6 @@
 categories_famille_som: list[str] = [
     "LEVURE",
-    "COLORANT",
+    "FLAN",
     "BOUILLON",
     "C.A (ht)",
 ]
@@ -12,7 +12,7 @@ categories_famille_vmm: list[str] = [
 ]
 categories_famille_all: list[str] = [
     "LEVURE",
-    "COLORANT",
+    "FLAN",
     "BOUILLON",
     "CONDIMENTS",
     "SAUCES",
