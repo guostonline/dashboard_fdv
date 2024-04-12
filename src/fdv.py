@@ -2,7 +2,7 @@ pre_vendeur: list = [
     "Y59 EL GHANMI MOHAMED",
     "F77 EL MEZRAOUI YOUSSEF",
     "T45 FAICAL GOUIZID",
-    "J01 BOUGAYOU ABDELHAKIM",
+    "E31 BENCHOUIKH MOHAMMED",
     "D45 OUARSSASSA YASSINE",
     "Y60 ATOUAOU AIMAD",
     "E66 MOUTAOUAKIL MOSTAFA",
@@ -11,17 +11,31 @@ pre_vendeur: list = [
     "E14 BOUMDIANE MOHAMED",
     "F78 GHOUSMI MOURAD",
     "E60 BOUALLALI FARID",
-   
+    
+]
+pre_vendeur_chakib: list = [
+    
+    "E66 MOUTAOUAKIL MOSTAFA",
+    "D86 ACHAOUI AZIZ",
+    "K91 BAIZ MOHAMED",
+    "E14 BOUMDIANE MOHAMED",
+    "F78 GHOUSMI MOURAD",
+    "E60 BOUALLALI FARID",
     
 ]
 som_pre_vendeur: list = [
     "Y59 EL GHANMI MOHAMED",
-    "J01 BOUGAYOU ABDELHAKIM",
-    "D45 OUARSSASSA YASSINE",  
+    "E31 BENCHOUIKH MOHAMMED",
+    "D45 OUARSSASSA YASSINE",
     "D86 ACHAOUI AZIZ",
     "E14 BOUMDIANE MOHAMED",
     "F78 GHOUSMI MOURAD",
-    
+]
+som_pre_vendeur_chakib: list = [
+  
+    "D86 ACHAOUI AZIZ",
+    "E14 BOUMDIANE MOHAMED",
+    "F78 GHOUSMI MOURAD",
 ]
 vmm_pre_vendeur:list=[
     "F77 EL MEZRAOUI YOUSSEF",
@@ -31,9 +45,15 @@ vmm_pre_vendeur:list=[
     "K91 BAIZ MOHAMED",
     "E60 BOUALLALI FARID",
 ]
+vmm_pre_vendeur_chakib:list=[
+   
+    "E66 MOUTAOUAKIL MOSTAFA",
+    "K91 BAIZ MOHAMED",
+    "E60 BOUALLALI FARID",
+]
 som_all: list = [
     "Y59 EL GHANMI MOHAMED",
-    "J01 BOUGAYOU ABDELHAKIM",
+    "E31 BENCHOUIKH MOHAMMED",
     "D45 OUARSSASSA YASSINE",
     "D86 ACHAOUI AZIZ",
     "E14 BOUMDIANE MOHAMED",
@@ -44,7 +64,6 @@ som_all: list = [
     "T89 AKNOUN MOHAMED",
     "K60 ELHAOUZI RACHID",
     "D48 IBACH MOHAMED",
-    
 ]
 vmm_all:list=[
     "F77 EL MEZRAOUI YOUSSEF",
@@ -71,21 +90,27 @@ conventionnel: list = [
 ]
 cdz:list=[
         "CHAKIB ELFIL",
-       "BOUTMEZGUINE EL MOSTAFA",
+        "BOUTMEZGUINE EL MOSTAFA",
         ]
 
 
 def get_categorie(categories: str):
     if categories == "Pré-vendeur":
         return pre_vendeur
+    if categories == "Pré-vendeur Chakib":
+        return pre_vendeur_chakib
     elif categories == "Conventionnel":
         return conventionnel
     elif categories == "One by One":
         return pre_vendeur[0]
     elif categories == "SOM pré-vendeur":
         return som_pre_vendeur
+    elif categories == "SOM pré-vendeur Chakib":
+        return som_pre_vendeur_chakib
     elif categories == "VMM pré-vendeur":
         return vmm_pre_vendeur
+    elif categories == "VMM pré-vendeur Chakib":
+        return vmm_pre_vendeur_chakib
     elif categories == "SOM All":
         return som_all
     elif categories == "VMM All":

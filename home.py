@@ -24,6 +24,10 @@ def home_page():
     day_work = 1
     real_days_rest = 1
 
+    # This code snippet is checking if the key "load_state" is not already present in the
+    # `st.session_state`. If it is not present, it initializes the key "load_state" in the
+    # `st.session_state` with a boolean value of `True`. This is a way to set an initial state or
+    # default value for the "load_state" key in the session state.
     if "load_state" not in st.session_state:
         st.session_state.load_state = True
 
@@ -94,7 +98,7 @@ def home_page():
         column_config={
             "Total Rest %": st.column_config.ProgressColumn(
                 "% to win",
-                help="The sales volume in DH",
+                help="The sales volume in USD",
                 format=" %i",
                 min_value=0,
                 max_value=100,
@@ -119,6 +123,10 @@ def home_page():
     )
 
     def set_color() -> list:
+        """
+        A function that sets colors based on the values in the 'REAL' and 'OBJ' columns of df_chart.
+        Returns a list of colors.
+        """
         my_list = []
         for i in range(len(df_chart)):
             if df_chart["REAL"].values[i] >= df_chart["OBJ"].values[i]:
@@ -151,6 +159,15 @@ def home_page():
     )
 
     def famille_chart(famille: Famille) -> px.bar:
+        """
+        A function that generates a bar chart for a given "Famille" object using Plotly Express.
+        
+        Parameters:
+            famille (Famille): The "Famille" object for which the bar chart is generated.
+        
+        Returns:
+            px.bar: A Plotly Express bar chart representing the data for the given "Famille" object.
+        """
         chart = px.bar(
             suivi.chart_famille(famille.name, select_vendeur),
             y=suivi.chart_famille(famille.name, select_vendeur).index,

@@ -11,18 +11,18 @@ class Suivi:
 
         self.df = pd.read_excel("excel/finale.xlsx")
         list_of_string_H: list = self.df[
-            self.df["H"].apply(lambda x: isinstance(x, str))
+            self.df["H %"].apply(lambda x: isinstance(x, str))
         ]
 
         for i in list_of_string_H.index:
-            self.df.loc[i, "H"] = 0
+            self.df.loc[i, "H %"] = 0
         self.df = self.df.astype(
             {
                 "REAL": "int",
                 "OBJ": "int",
                 "EnCours": "int",
-                "R.2023": "int",
-                "H.2022": "int",
+                "REAL 2024": "int",
+                "H 2023": "int",
             }
         )
 
@@ -40,7 +40,7 @@ class Suivi:
 
         self.df.loc[:, "Percent"] = self.df["Percent"].map("{:.1%}".format)
 
-        self.df.loc[:, "H"] = self.df["H"].map("{:.1%}".format)
+        self.df.loc[:, "H %"] = self.df["H %"].map("{:.1%}".format)
         self.df.replace(0, 1, inplace=True)
         self.df.replace(1, 0, inplace=True)
         self.df.replace("SAUCES TACOS", "SAUCES_TACOS", inplace=True)
@@ -114,8 +114,7 @@ class Suivi:
             self.df.query(
                 "Vendeur==['CHAKIB ELFIL','CDZ AGADIR DET2'] & Famille=='C.A (ht)'"
             )
-            
-            .sum()[["R.2023"]]
+            .sum()[["REAL 2024"]]
             
         )
         df2 = (
@@ -123,7 +122,7 @@ class Suivi:
                 "Vendeur==['CHAKIB ELFIL','CDZ AGADIR DET2'] & Famille=='C.A (ht)'"
             )
             
-            .sum()[["H.2022"]]
+            .sum()[["H 2023"]]
             
         )
         

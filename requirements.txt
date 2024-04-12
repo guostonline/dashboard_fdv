@@ -1,0 +1,7 @@
+pywhatkit
+streamlit_option_menu
+millify
+plotly
+dataframe_image
+pandas
+openpyxl

@@ -53,6 +53,7 @@ class Excel:
         sheet_ranges_quali['G1'] = "TSM"
         sheet_ranges_quali['G1'].fill = PatternFill("solid", fgColor="4cbb17")
         sheet_ranges_quali["F1"].fill = PatternFill("solid", fgColor="4cbb17")
+        ## AGADIR
         sheet_ranges_quanti = wb["AGADIR"]
         sheet_ranges_quanti.unmerge_cells("A8:A9")
         sheet_ranges_quanti.unmerge_cells("B8:B9")
@@ -60,20 +61,24 @@ class Excel:
         sheet_ranges_quanti.unmerge_cells("F8:J8")
         sheet_ranges_quanti.unmerge_cells("K8:O8")
         sheet_ranges_quanti.delete_cols(1, 2)
-        sheet_ranges_quanti.delete_cols(3, 1)
-        sheet_ranges_quanti.delete_cols(6, 2)
+        #sheet_ranges_quanti.delete_cols(3, 1)
+        #sheet_ranges_quanti.delete_cols(7, 2)
         sheet_ranges_quanti.delete_cols(7, 2)
-        sheet_ranges_quanti.delete_cols(9, 1)
+        sheet_ranges_quanti.delete_cols(8, 2)
         sheet_ranges_quanti.delete_cols(10, 1)
+        sheet_ranges_quanti.delete_cols(11, 1)
 
         sheet_ranges_quanti.delete_rows(1, 8)
         sheet_ranges_quanti.delete_rows(2, 32)
         sheet_ranges_quanti['A1'] = "Vendeur"
         sheet_ranges_quanti['B1'] = "Famille"
-        sheet_ranges_quanti['E1'] = "Percent"
-        sheet_ranges_quanti['F1'] = "R.2023"
-        sheet_ranges_quanti['G1'] = "H.2022"
-        sheet_ranges_quanti['H1'] = "H"
+        sheet_ranges_quanti['C1'] = "J-1"
+        sheet_ranges_quanti['D1'] = "REAL"
+        sheet_ranges_quanti['E1'] = "OBJ"
+        sheet_ranges_quanti['F1'] = "Percent"
+        sheet_ranges_quanti['G1'] = "REAL 2024"
+        sheet_ranges_quanti['H1'] = "H 2023"
+        sheet_ranges_quanti['I1'] = "H %"
         print("max", sheet_ranges_quanti.max_row)
         for i in range(sheet_ranges_quanti.max_row):
             if sheet_ranges_quanti[f"E{i + 1}"].value == '%':
@@ -91,3 +96,5 @@ class Excel:
             # sheet_ranges[f"E{i+1}"]=0
         wb.save("excel/finale.xlsx")
         print("qualitatif & quantitatif saved")
+    def add_j1():
+        pass

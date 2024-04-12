@@ -3,7 +3,7 @@ from enum import Enum
 
 class Famille(Enum):
     LEVURE = "LEVURE"
-    FLAN = "FALN"
+    FLAN = "FLAN"
     BOUILLON = "BOUILLON"
     CONDIMENTS = "CONDIMENTS"
     SAUCES = "SAUCES"
@@ -14,9 +14,12 @@ class Famille(Enum):
 class Categorie(Enum):
     CDZ="CDZ"
     PREVENDEUR = "Pré-vendeur"
+    PREVENDEURCHAKIB = "Pré-vendeur Chakib"
     CONVENTIONNEL = "Conventionnel"
     ALLFDV = "ALL FDV"
     SOMPREVENTE = "SOM pré-vendeur"
+    SOMPREVENTECHAKIB="SOM pré-vendeur Chakib"
+    VMMPREVENTECHAKIB = "VMM pré-vendeur Chakib"
     VMMPREVENTE = "VMM pré-vendeur"
     SOMALL = "SOM All"
     VMMALL = "VMM All"

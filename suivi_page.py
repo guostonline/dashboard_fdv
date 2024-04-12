@@ -1,27 +1,34 @@
+
+import pandas as pd
+#import gspread
 import streamlit as st
-from datetime import date
-from src.database.database import SaveSuivi
-from src.vendeurs_phone import *
+
+import pip
+pip.main(["install", "gspread"])
+
+from src.excel_fonctions import Excel
 
 
-is_upload = False
-today = date.today().strftime("%d/%m/%Y")
-def suivi_page():
-    upload_file = st.sidebar.file_uploader("upload Excel file", "xlsx")
-    
-    
+def suivi_page() :
+    if "load_state" not in st.session_state:
+        st.session_state.load_state = True
+    uploaded_file = st.sidebar.file_uploader(
+        "Choisir un fichier excel.",
+        type="xlsx",
+    )
+    if uploaded_file is not None and st.session_state.load_state:
+        sheet = Excel(uploaded_file)
+        sheet.fix_sheet()
+        df=pd.read_excel("excel/finale.xlsx")
+        
+        st.write(df)
+        
 
 
-    def add_to_database(date: str):
-      
-        suivi = SaveSuivi(upload_file,date)
-        suivi.send_all_vendeurs()
+def update_sheet():
+    pass
 
 
-    if upload_file is not None:
-        is_upload = True
-    date_text=st.date_input("choisir une date",date.today(),format="DD/MM/YYYY")
    
-    send_data = st.button("Send Date")
-    if send_data and date_text is not None:
-        add_to_database(date_text)
+    
+st.button("Update", on_click=update_sheet)  
