@@ -3,13 +3,16 @@ import pandas as pd
 #import gspread
 import streamlit as st
 
-import pip
-pip.main(["install", "gspread"])
+
 
 from src.excel_fonctions import Excel
 
 
+    
+    
+    
 def suivi_page() :
+    
     if "load_state" not in st.session_state:
         st.session_state.load_state = True
     uploaded_file = st.sidebar.file_uploader(
@@ -23,12 +26,20 @@ def suivi_page() :
         
         st.write(df)
         
+    date=st.date_input(label="Date")
 
 
-def update_sheet():
-    pass
-
-
+    click_me=st.button("Add data")
+    if click_me:
+        df=df.astype(
+           { "J-1":"int"}
+        )
+        j_1_list = df["J-1"].tolist()
+        j_1_list = [int(x) for x in j_1_list]
+        j_1_list.insert(0, date)
+        Excel.add_data_to_database(j_1_list)
+        st.info("success")
+    
+            
    
     
-st.button("Update", on_click=update_sheet)  

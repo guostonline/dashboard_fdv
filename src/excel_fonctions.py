@@ -96,5 +96,15 @@ class Excel:
             # sheet_ranges[f"E{i+1}"]=0
         wb.save("excel/finale.xlsx")
         print("qualitatif & quantitatif saved")
-    def add_j1():
-        pass
+    
+    @staticmethod
+    def add_data_to_database(data_list):
+       
+        wb = load_workbook("excel/database.xlsx")
+       
+        sheet_ranges_database = wb["j-1"]
+        max_column = sheet_ranges_database.max_column+1
+        for i, data in enumerate(data_list):
+            sheet_ranges_database.cell(row=i+1, column=max_column, value=data)
+        wb.save("excel/database.xlsx")
+        

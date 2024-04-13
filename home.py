@@ -12,10 +12,11 @@ from src.famille import *
 from src.suivi import Suivi
 
 
+
+
 def home_page():
+    
     get_day_work = 24
-    # with open('style.css') as f:
-    # st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
     if "total_days_month" not in st.session_state:
         st.session_state.total_days_month = (24,)
     if "days_worked" not in st.session_state:
@@ -24,10 +25,6 @@ def home_page():
     day_work = 1
     real_days_rest = 1
 
-    # This code snippet is checking if the key "load_state" is not already present in the
-    # `st.session_state`. If it is not present, it initializes the key "load_state" in the
-    # `st.session_state` with a boolean value of `True`. This is a way to set an initial state or
-    # default value for the "load_state" key in the session state.
     if "load_state" not in st.session_state:
         st.session_state.load_state = True
 
@@ -76,7 +73,6 @@ def home_page():
         st.session_state.total_days_month, st.session_state.days_worked, real_days_rest
     )
     df_table, df_chart = suivi.df_filter(select_vendeur, select_famille)
-    # df_chart = suivi.filter_vendeur_famille(select_vendeur, select_famille)
 
     df_whatsapp = suivi.df_for_whatsapp(select_vendeur, select_famille)
     print(
@@ -93,21 +89,6 @@ def home_page():
         col_real = st.metric("Road to win cdz1", 880000, 88)
     with col_road_cdz2:
         col_real = st.metric("Road to win cdz2", 880000, 88)
-    st.data_editor(
-        df_table,
-        column_config={
-            "Total Rest %": st.column_config.ProgressColumn(
-                "% to win",
-                help="The sales volume in USD",
-                format=" %i",
-                min_value=0,
-                max_value=100,
-                width="medium"
-                # df_chart["OBJ ttc"]/(df_chart["REAL"]*1.2)*100,
-            )
-        },
-        hide_index=False,
-    )
 
     col_message, col_send_message, col_vide = st.columns(3)
     today = date.today().strftime("%d/%m/%Y")
@@ -123,10 +104,6 @@ def home_page():
     )
 
     def set_color() -> list:
-        """
-        A function that sets colors based on the values in the 'REAL' and 'OBJ' columns of df_chart.
-        Returns a list of colors.
-        """
         my_list = []
         for i in range(len(df_chart)):
             if df_chart["REAL"].values[i] >= df_chart["OBJ"].values[i]:
@@ -154,20 +131,10 @@ def home_page():
         barmode="overlay",
         height=550,
         width=500,
-        # color="REAL",
         color_discrete_sequence=set_color(),
     )
 
     def famille_chart(famille: Famille) -> px.bar:
-        """
-        A function that generates a bar chart for a given "Famille" object using Plotly Express.
-        
-        Parameters:
-            famille (Famille): The "Famille" object for which the bar chart is generated.
-        
-        Returns:
-            px.bar: A Plotly Express bar chart representing the data for the given "Famille" object.
-        """
         chart = px.bar(
             suivi.chart_famille(famille.name, select_vendeur),
             y=suivi.chart_famille(famille.name, select_vendeur).index,
