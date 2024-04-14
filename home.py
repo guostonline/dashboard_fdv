@@ -89,7 +89,22 @@ def home_page():
         col_real = st.metric("Road to win cdz1", 880000, 88)
     with col_road_cdz2:
         col_real = st.metric("Road to win cdz2", 880000, 88)
-
+        
+    st.data_editor(
+        df_table,
+        column_config={
+            "Total Rest %": st.column_config.ProgressColumn(
+                "% to win",
+                help="The sales volume in USD",
+                format=" %i",
+                min_value=0,
+                max_value=100,
+                width="medium"
+                # df_chart["OBJ ttc"]/(df_chart["REAL"]*1.2)*100,
+            )
+        },
+        hide_index=False,
+    )
     col_message, col_send_message, col_vide = st.columns(3)
     today = date.today().strftime("%d/%m/%Y")
 
